@@ -1,0 +1,70 @@
+<div class="container">
+  <legend>Calculadora CDB</legend>
+  <div class="row">
+    <div class="col col-md-4">
+      <div class="row">
+        <div class="col col-md-4">CDI: </div>
+        <div class="col col-md-4">{{ cdi }}</div>
+      </div>
+      <div class="row">
+        <div class="col col-md-4">TB: </div>
+        <div class="col col-md-4">{{ tb }}</div>
+      </div>
+      <div class="row">
+        <div class="col col-md-4">Valor inicial: </div>
+        <div class="col col-md-4">{{ initialValue }}</div>
+      </div>
+      <div class="row">
+        <div class="col col-md-4">Valor final: </div>
+        <div class="col col-md-4">{{ finalValue }}</div>
+      </div>
+      <div class="row">
+        <div class="col col-md-4">Qtd de meses: </div>
+        <div class="col col-md-4">{{ numberOfMonths }}</div>
+      </div>
+      <div class="row">
+        <div class="col col-md-4">Taxa Aplicada: </div>
+        <div class="col col-md-4">{{ taxApplied }}</div>
+      </div>
+    </div>
+    <div class="col col-md-4">
+      <form [formGroup]="incomeForm">
+        <div class="mb-3">
+          <label for="value" class="form-label">Valor aplicado</label>
+          <input
+            type="text"
+            class="form-control"
+            id="value"
+            formControlName="value"
+            [ngClass]="{ 'is-invalid': fb.value.errors && fb.value.touched }"
+          />
+          <div *ngIf="fb.value.errors?.required" class="invalid-feedback">
+            Um valor monetário positivo é obrigatório.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="months" class="form-label">Meses aplicado</label>
+          <input
+            type="number"
+            class="form-control"
+            id="months"
+            formControlName="months"
+            [ngClass]="{ 'is-invalid': fb.months.errors && fb.months.touched }"
+          />
+          <div *ngIf="fb.months.errors?.required" class="invalid-feedback">
+            Quantidade de meses obrigatória
+          </div>
+          <div *ngIf="fb.months.errors?.min" class="invalid-feedback">
+            Quantidade de meses deve ser mior que zero
+          </div>
+        </div>
+        <div style="text-align: right;">
+          <button type="submit" class="btn btn-primary" [disabled]="!incomeForm.valid" (click)="postRequisition()">Calcular</button>
+        </div>
+      </form>
+    </div>
+    <div class="col col-md-4">
+      <div style="position: fixed">{{ incomeFixed }}</div>
+    </div>
+  </div>
+</div>
